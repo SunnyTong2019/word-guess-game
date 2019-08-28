@@ -1,10 +1,10 @@
 /*
 -declare variables:
  .wins(number, 0),guesses(number, 12),letterGuessed(empty array),animalWords(array), wordPicked, currentWord(empty array)
- .variable to hold DOM elements by elementId
+ .variable to hold DOM elements got by elementId
 
 -initialize the game (function):
- .computer randomly pick a word from animalWords array
+ .computer randomly picks a word from animalWords array
  .get the length of the word picked, push same amount of "_" characters to currentWord array
  .display currentWord array in elementId "current-word"
 
@@ -21,10 +21,11 @@
     ...if yes, do nothing
 
 -if currentWord array === the word picked:
- .wins increases by 1
+ .wins increases by 1, display it in elementId "wins"
  .reset game:
-  ..remaining guesses goes back to 12
-  ..letterGuessed array goes back to empty
+  ..remaining guesses goes back to 12, display it in elementId "guesses"
+  ..letterGuessed array goes back to empty, update elementId "letters"
+  ..currentWord array go back to empty
   ..initialize the game
 
 -if remaining guesses === 0:
@@ -34,7 +35,7 @@
 var wins = 0;
 var guesses = 12;
 var letterGuessed = [];
-var animalWords = ["bear", "cat", "dolphin", "elephant"];
+var animalWords = ["bear", "cat", "dolphin", "elephant", "goose", "jaguar", "mongoose", "ox", "roadrunner"];
 var wordPicked;
 var currentWord = [];
 var winsText = document.getElementById("wins");
@@ -81,6 +82,33 @@ document.onkeyup = function (event) {
         }
     }
 
+    if (currentWord.join("") === wordPicked)
+    { 
+        wins++;
+        winsText.textContent = wins;
+        
+        guesses = 12;
+        guessesText.textContent = guesses;
+
+        letterGuessed = [];
+        lettersText.textContent = "Letters Guessed: ";
+
+        currentWord = [];
+        initGame();
+    }
+
+    if (guesses === 0)
+    { 
+        guesses = 12;
+        guessesText.textContent = guesses;
+
+        letterGuessed = [];
+        lettersText.textContent = "Letters Guessed: ";
+
+        currentWord = [];
+        initGame();
+    }
 };
+
 
 
