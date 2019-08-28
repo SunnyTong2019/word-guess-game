@@ -10,9 +10,12 @@
 
 -listen to keyUp event and check the key pressed:
  .if the key is part of the word:
-  ..remaining guesses decreases by 1, display it in elementId "guesses"
-  ..find the key indexes in the word, update the "_" character at the same indexes in currentWord array to the key
-  ..display updated currentWord array in elementId "current-word"
+  ..check if the key is already in currentWord array:
+    ...if no:
+       ....remaining guesses decreases by 1, display it in elementId "guesses"
+       ....find the key indexes in the word, update the "_" character at the same indexes in currentWord array to the key
+       ....display updated currentWord array in elementId "current-word"
+    ...if yes, do nothing
  .if the key is NOT part of the word:
   ..check if the key is already in letterGuessed array
     ...if no:
@@ -48,8 +51,7 @@ function initGame() {
 
     wordPicked = animalWords[Math.floor(Math.random() * animalWords.length)];
 
-    for (var i = 0; i < wordPicked.length; i++) 
-    { currentWord.push("_"); }
+    for (var i = 0; i < wordPicked.length; i++) { currentWord.push("_"); }
 
     currentWordText.textContent = currentWord.join(" ");
 
@@ -61,16 +63,18 @@ initGame();
 document.onkeyup = function (event) {
 
     if (wordPicked.includes(event.key)) {
-        guesses--;
-        guessesText.textContent = guesses;
+        if (!currentWord.includes(event.key)) {
+            guesses--;
+            guessesText.textContent = guesses;
 
-        for (var i = 0; i < wordPicked.length; i++) {
-            if (wordPicked[i] === event.key) {
-                currentWord[i] = event.key;
+            for (var i = 0; i < wordPicked.length; i++) {
+                if (wordPicked[i] === event.key) {
+                    currentWord[i] = event.key;
+                }
             }
-        }
 
-        currentWordText.textContent = currentWord.join(" ");
+            currentWordText.textContent = currentWord.join(" ");
+        }
 
     } else {
         if (!letterGuessed.includes(event.key)) {
@@ -82,11 +86,10 @@ document.onkeyup = function (event) {
         }
     }
 
-    if (currentWord.join("") === wordPicked)
-    { 
+    if (currentWord.join("") === wordPicked) {
         wins++;
         winsText.textContent = wins;
-        
+
         guesses = 12;
         guessesText.textContent = guesses;
 
@@ -97,8 +100,7 @@ document.onkeyup = function (event) {
         initGame();
     }
 
-    if (guesses === 0)
-    { 
+    if (guesses === 0) {
         guesses = 12;
         guessesText.textContent = guesses;
 
