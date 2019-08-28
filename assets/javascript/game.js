@@ -87,6 +87,7 @@ document.onkeyup = function (event) {
     }
 
     if (currentWord.join("") === wordPicked) {
+        document.getElementById("sound").play();
         wins++;
         winsText.textContent = wins;
 
