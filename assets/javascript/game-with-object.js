@@ -4,9 +4,10 @@
  .variables to hold DOM elements got by elementId
 
 -declare game object:
- .properties: wins(number, 0),guesses(number, 12),letterGuessed(empty array), , currentWord(empty array)
+ .properties: wins(number, 0), guesses(number, 12), letterGuessed(empty array), currentWord(empty array)
+ .method: initialize game, reduce remaining guesses number, add item to letterGuessed, update currentWord, update wins
 
--listen to keyUp event and check the key pressed:
+-listen to keyup event and check the key pressed:
  .if the key is part of the word:
   ..check if the key is already in currentWord array:
     ...if no:
@@ -21,14 +22,14 @@
        ....add/push the key to letterGuessed array and display the array in elementId "letters"
     ...if yes, do nothing
 
--if currentWord array === the word picked:
+-if currentWord array === wordPicked:
+ .play a sound
  .wins increases by 1, display it in elementId "wins"
  .initialize the game
 
 -if remaining guesses === 0:
  .initialize the game
 */
-
 
 var animalWords = ["bear", "cat", "dolphin", "elephant", "goose", "jaguar", "mongoose", "ox", "roadrunner"];
 var wordPicked;
@@ -44,7 +45,7 @@ var game = {
     letterGuessed: [],
     currentWord: [],
 
-    initGame: function ()  {
+    initGame: function () {
         this.guesses = 12;
         guessesText.textContent = this.guesses;
 
@@ -55,8 +56,7 @@ var game = {
 
         wordPicked = animalWords[Math.floor(Math.random() * animalWords.length)];
 
-        for (var i = 0; i < wordPicked.length; i++) 
-        { this.currentWord.push("_"); }
+        for (var i = 0; i < wordPicked.length; i++) { this.currentWord.push("_"); }
 
         currentWordText.textContent = this.currentWord.join(" ");
     },
@@ -77,7 +77,6 @@ var game = {
                 this.currentWord[i] = item;
             }
         }
-
         currentWordText.textContent = this.currentWord.join(" ");
     },
 
@@ -88,9 +87,7 @@ var game = {
     }
 }
 
-
 game.initGame();
-
 
 document.onkeyup = function (event) {
 

@@ -8,7 +8,7 @@
  .get the length of the word picked, push same amount of "_" characters to currentWord array
  .display currentWord array in elementId "current-word"
 
--listen to keyUp event and check the key pressed:
+-listen to keyup event and check the key pressed:
  .if the key is part of the word:
   ..check if the key is already in currentWord array:
     ...if no:
@@ -23,12 +23,13 @@
        ....add/push the key to letterGuessed array and display the array in elementId "letters"
     ...if yes, do nothing
 
--if currentWord array === the word picked:
+-if currentWord array === wordPicked:
+ .play a sound
  .wins increases by 1, display it in elementId "wins"
  .reset game:
   ..remaining guesses goes back to 12, display it in elementId "guesses"
   ..letterGuessed array goes back to empty, update elementId "letters"
-  ..currentWord array go back to empty
+  ..currentWord array goes back to empty
   ..initialize the game
 
 -if remaining guesses === 0:
@@ -46,7 +47,6 @@ var guessesText = document.getElementById("guesses");
 var lettersText = document.getElementById("letters");
 var currentWordText = document.getElementById("current-word");
 
-
 function initGame() {
 
     wordPicked = animalWords[Math.floor(Math.random() * animalWords.length)];
@@ -58,7 +58,6 @@ function initGame() {
 }
 
 initGame();
-
 
 document.onkeyup = function (event) {
 
@@ -72,10 +71,8 @@ document.onkeyup = function (event) {
                     currentWord[i] = event.key;
                 }
             }
-
             currentWordText.textContent = currentWord.join(" ");
         }
-
     } else {
         if (!letterGuessed.includes(event.key)) {
             guesses--;
@@ -111,6 +108,7 @@ document.onkeyup = function (event) {
         currentWord = [];
         initGame();
     }
+
 };
 
 
